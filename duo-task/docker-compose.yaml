@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - target: 80
+        published: 80
+    volumes:
+      - type: bind
+        source: nginx.conf
+        target: /etc/nginx/nginx.conf
+    networks:
+      - duo-network
+  flask-app:
+    image: duo-app:v1
+    build: .
+    networks:
+      - duo-network
+networks:
+  duo-network:
